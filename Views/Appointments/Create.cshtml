@@ -1,0 +1,54 @@
+@model AppointmentViewModel
+@{ ViewData["Title"] = "Book appointment"; }
+
+<div class="page-heading">
+    <div><p class="eyebrow">NEW REQUEST</p><h1>Book an appointment</h1><p>Tell us a little about the visit. A request is held in memory for this demonstration.</p></div>
+</div>
+<div class="row g-4 align-items-start">
+    <div class="col-lg-7">
+        <div class="form-panel">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+                <div class="row g-3">
+                    <div class="col-md-6"><label asp-for="PatientName" class="form-label"></label><input asp-for="PatientName" class="form-control" placeholder="e.g. Priya Kapoor" /><span asp-validation-for="PatientName" class="field-validation"></span></div>
+                    <div class="col-md-6"><label asp-for="PatientEmail" class="form-label"></label><input asp-for="PatientEmail" class="form-control" placeholder="you@example.com" /><span asp-validation-for="PatientEmail" class="field-validation"></span></div>
+                    <div class="col-12">
+                        <label asp-for="DoctorId" class="form-label">Choose a doctor</label>
+                        <select id="DoctorSelection" class="form-select">
+                            <option value="0">Select a specialist</option>
+                            @foreach (var doctor in (IReadOnlyList<Doctor>)ViewBag.DoctorOptions)
+                            {
+                                <option value="@doctor.DoctorId" data-fee="@doctor.ConsultationFee" selected="@(doctor.DoctorId == Model.DoctorId ? "selected" : null)">@doctor.DoctorName - @doctor.Specialization</option>
+                            }
+                        </select>
+                        <input type="hidden" asp-for="DoctorId" />
+                        <span asp-validation-for="DoctorId" class="field-validation"></span>
+                    </div>
+                    <div class="col-md-6"><label asp-for="AppointmentDate" class="form-label"></label><input asp-for="AppointmentDate" class="form-control" /><span asp-validation-for="AppointmentDate" class="field-validation"></span></div>
+                    <div class="col-12"><label asp-for="Reason" class="form-label">Reason for visit <span class="optional">Optional</span></label><textarea asp-for="Reason" class="form-control" rows="4" placeholder="Share anything that will help the care team prepare"></textarea><span asp-validation-for="Reason" class="field-validation"></span></div>
+                </div>
+                <div class="form-footer"><button type="submit" class="btn btn-primary">Review appointment &#8594;</button><a asp-controller="Doctors" asp-action="Index" class="text-link">Cancel</a></div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="info-panel"><p class="eyebrow">PRICING</p><h2>Transparent by design</h2><p>Your selected doctor's consultation rate is combined with the fixed service fee. The server recalculates this total when you submit.</p><div class="fee-row"><span>Consultation</span><strong id="consultationFee">Select a doctor</strong></div><div class="fee-row"><span>Service fee</span><strong>&#8377;100</strong></div><div class="fee-row total"><span>Final total</span><strong id="totalFee">Select a doctor</strong></div></div>
+        <div class="small-note mt-3">No database is connected. Appointment submissions are for this college practical demonstration only.</div>
+    </div>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
+<script>
+    const selection = document.getElementById('DoctorSelection');
+    const hiddenId = document.getElementById('DoctorId');
+    const consultation = document.getElementById('consultationFee');
+    const total = document.getElementById('totalFee');
+    function updateFees() {
+        const option = selection.options[selection.selectedIndex];
+        const fee = Number(option?.dataset.fee || 0);
+        hiddenId.value = selection.value;
+        consultation.textContent = fee ? `₹${fee.toLocaleString('en-IN')}` : 'Select a doctor';
+        total.textContent = fee ? `₹${(fee + 100).toLocaleString('en-IN')}` : 'Select a doctor';
+    }
+    selection.addEventListener('change', updateFees);
+    updateFees();
+</script>

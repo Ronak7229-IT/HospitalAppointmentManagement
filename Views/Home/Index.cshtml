@@ -1,0 +1,30 @@
+﻿@model HomeViewModel
+@{ ViewData["Title"] = "Dashboard"; }
+
+<section class="hero-panel mb-4">
+    <div class="hero-copy">
+        <p class="eyebrow">CARE, ORGANIZED</p>
+        <h1>Your care journey starts here.</h1>
+        <p class="hero-lead">Find the right specialist, understand the visit cost, and request an appointment in a few calm, simple steps.</p>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-primary btn-lg" asp-controller="Appointments" asp-action="Create">Book an appointment <span aria-hidden="true">&#8594;</span></a>
+            <a class="btn btn-light btn-lg" asp-controller="Doctors" asp-action="Index">Explore doctors</a>
+        </div>
+    </div>
+    <div class="hero-note"><span class="status-dot"></span><strong>Open for requests</strong><small>Mon - Sat, 8:00 - 20:00</small></div>
+</section>
+
+<div class="row g-3 mb-5">
+    <div class="col-md-4"><div class="metric-card"><span class="metric-label">Available doctors</span><strong>@Model.Doctors.Count</strong><span class="metric-detail">Across our directory</span></div></div>
+    <div class="col-md-4"><div class="metric-card"><span class="metric-label">Specializations</span><strong>@Model.SpecializationCount</strong><span class="metric-detail">Focused areas of care</span></div></div>
+    <div class="col-md-4"><div class="metric-card"><span class="metric-label">Service fee</span><strong>&#8377;100</strong><span class="metric-detail">Added to every consultation</span></div></div>
+</div>
+
+<section class="section-heading"><div><p class="eyebrow">HOW IT WORKS</p><h2>A clearer way to plan care</h2></div><a asp-controller="Doctors" asp-action="Index" class="text-link">View all doctors &#8594;</a></section>
+<div class="row g-3 mb-5">
+    <div class="col-md-4"><div class="process-card"><span class="step-number">01</span><h3>Choose a specialist</h3><p>Compare experience, specialization, and transparent consultation charges.</p></div></div>
+    <div class="col-md-4"><div class="process-card"><span class="step-number">02</span><h3>Share your details</h3><p>Pick a convenient date and add an optional note for the care team.</p></div></div>
+    <div class="col-md-4"><div class="process-card"><span class="step-number">03</span><h3>Get confirmation</h3><p>Review your request and fee breakdown instantly. This demo keeps data in memory.</p></div></div>
+</div>
+
+<section class="capability-band"><div><p class="eyebrow">ONE PRACTICAL DEMO</p><h2>Built to show the full MVC workflow.</h2></div><div class="capability-list"><span>Doctor directory</span><span>Appointments</span><span>Async API posts</span><span>Cookie + session state</span></div></section>

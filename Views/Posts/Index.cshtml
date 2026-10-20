@@ -1,0 +1,7 @@
+@model IReadOnlyList<Post>
+@{ ViewData["Title"] = "External posts"; }
+
+<div class="page-heading"><div><p class="eyebrow">EXTERNAL API</p><h1>Health desk updates</h1><p>Posts loaded asynchronously from JSONPlaceholder to demonstrate a separate HTTP integration.</p></div><span class="api-pill">LIVE REQUEST</span></div>
+@if (ViewBag.Error is not null) { <div class="alert alert-warning">@ViewBag.Error</div> }
+else if (Model.Count == 0) { <div class="empty-state"><h2>No posts returned</h2><p>The external service did not return any updates.</p></div> }
+else { <div class="table-panel"><div class="table-responsive"><table class="table align-middle"><thead><tr><th>Post ID</th><th>Title</th></tr></thead><tbody>@foreach (var post in Model) { <tr><td><span class="id-chip">#@post.Id</span></td><td class="post-title">@post.Title</td></tr> }</tbody></table></div></div> }

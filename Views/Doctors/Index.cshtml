@@ -1,0 +1,17 @@
+@model IReadOnlyList<Doctor>
+@{ ViewData["Title"] = "Doctors"; }
+
+<div class="page-heading"><div><p class="eyebrow">CARE DIRECTORY</p><h1>Meet your care team</h1><p>Explore specialists and see the complete visit charge before you book.</p></div><a class="btn btn-primary" asp-controller="Appointments" asp-action="Create">Book appointment</a></div>
+@if (Model.Count == 0)
+{
+    <div class="empty-state"><h2>No doctors available</h2><p>Please check back shortly.</p></div>
+}
+else
+{
+    <div class="row g-4">
+    @foreach (var doctor in Model)
+    {
+        <div class="col-md-6 col-xl-4"><article class="doctor-card"><div class="doctor-avatar">@doctor.DoctorName.Split(' ').LastOrDefault()?.FirstOrDefault()</div><div class="doctor-card-body"><span class="specialty-tag">@doctor.Specialization</span><h2>@doctor.DoctorName</h2><p class="muted">@doctor.Experience years of experience</p><div class="fee-row"><span>Consultation</span><strong>&#8377;@doctor.ConsultationFee.ToString("N0")</strong></div><div class="fee-row total"><span>Total with service fee</span><strong>&#8377;@doctor.CalculateTotalCharge().ToString("N0")</strong></div><div class="card-actions"><a class="text-link" href="/Doctors/Details?id=@doctor.DoctorId">View details</a><a class="btn btn-sm btn-primary" asp-controller="Appointments" asp-action="Create" asp-route-doctorId="@doctor.DoctorId">Book</a></div></div></article></div>
+    }
+    </div>
+}
