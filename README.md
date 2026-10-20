@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MediCare Hospital Appointment Management
 
 MediCare is an ASP.NET Core MVC college practical demonstration. It provides a polished doctor directory, in-memory appointment request flow, asynchronous external API page, and a focused demonstration of cookie, session, query-string, and hidden-field state.
@@ -50,3 +51,7 @@ Open `http://localhost:5086`.
 ## Limitations
 
 Appointment confirmations are held only for the current request and are not persisted. Doctor data is sample data cached in process for three minutes. Response caching is intended only for the public doctor details endpoint; patient-specific and state-changing actions are not marked for public caching. The external posts page depends on JSONPlaceholder being reachable.
+=======
+# HospitalAppointmentManagement
+ASP.NET Core MVC Hospital Appointment Management System for WEB.NET practical.
+>>>>>>> c3ae3d1400be5e862e185d5485042a7a5744c7b5
